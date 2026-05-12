@@ -15,13 +15,28 @@ export default function Footer() {
               25+ years of expertise in government approvals and architecture liasoning in Mumbai.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-slate-400 hover:text-[#c8a96b] transition-colors">
+              <a
+                href="https://www.linkedin.com/company/ahmad-and-associates-co"
+                target="_blank"
+                rel="noreferrer"
+                className="text-slate-400 hover:text-[#c8a96b] transition-colors"
+              >
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="text-slate-400 hover:text-[#c8a96b] transition-colors">
+              <a 
+                href="https://twitter.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-slate-400 hover:text-[#c8a96b] transition-colors"
+              >
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-slate-400 hover:text-[#c8a96b] transition-colors">
+              <a 
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noreferrer"
+                className="text-slate-400 hover:text-[#c8a96b] transition-colors"
+              >
                 <Facebook size={20} />
               </a>
             </div>
