@@ -4,25 +4,52 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const formData = new FormData(e.currentTarget);
+    const fullName = String(formData.get("fullName") || "");
+    const email = String(formData.get("email") || "");
+    const phone = String(formData.get("phone") || "");
+    const company = String(formData.get("company") || "");
+    const projectType = String(formData.get("projectType") || "");
+    const message = String(formData.get("message") || "");
+
+    const subject = "New inquiry from Ahmad & Associates website";
+    const body = [
+      `Name: ${fullName}`,
+      `Email: ${email}`,
+      `Phone: ${phone}`,
+      `Company / Project: ${company}`,
+      `Project Type: ${projectType}`,
+      "",
+      "Message:",
+      message,
+    ].join("\n");
+
+    const mailtoLink = `mailto:shaikh.ashhar6@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    const anchor = document.createElement("a");
+    anchor.href = mailtoLink;
+    anchor.style.display = "none";
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+
     setSubmitted(true);
     setIsLoading(false);
-    
-    // Reset form after 3 seconds
+
     setTimeout(() => {
       setSubmitted(false);
-      e.currentTarget.reset();
+      formRef.current?.reset();
     }, 3000);
   };
 
@@ -101,13 +128,14 @@ export default function ContactPage() {
                     </div>
                   )}
 
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-semibold text-[#0f172a] mb-2">
                           Full Name *
                         </label>
                         <input
+                          name="fullName"
                           type="text"
                           required
                           className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-[#1d4ed8] focus:ring-2 focus:ring-[#1d4ed8]/20 transition-colors"
@@ -120,6 +148,7 @@ export default function ContactPage() {
                           Email *
                         </label>
                         <input
+                          name="email"
                           type="email"
                           required
                           className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-[#1d4ed8] focus:ring-2 focus:ring-[#1d4ed8]/20 transition-colors"
@@ -134,6 +163,7 @@ export default function ContactPage() {
                           Phone *
                         </label>
                         <input
+                          name="phone"
                           type="tel"
                           required
                           className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-[#1d4ed8] focus:ring-2 focus:ring-[#1d4ed8]/20 transition-colors"
@@ -146,6 +176,7 @@ export default function ContactPage() {
                           Company / Project Name
                         </label>
                         <input
+                          name="company"
                           type="text"
                           className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-[#1d4ed8] focus:ring-2 focus:ring-[#1d4ed8]/20 transition-colors"
                           placeholder="Your company or project"
@@ -158,6 +189,7 @@ export default function ContactPage() {
                         Project Type *
                       </label>
                       <select
+                        name="projectType"
                         required
                         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-[#1d4ed8] focus:ring-2 focus:ring-[#1d4ed8]/20 transition-colors"
                       >
@@ -176,6 +208,7 @@ export default function ContactPage() {
                         Message *
                       </label>
                       <textarea
+                        name="message"
                         required
                         rows={5}
                         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-[#1d4ed8] focus:ring-2 focus:ring-[#1d4ed8]/20 transition-colors resize-none"
