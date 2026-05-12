@@ -104,35 +104,38 @@ ahmad-and-associates/
 
 ### Setup
 
-1. **Push to GitHub**:
+1. **Create Repository**:
+   - Repository name: `ahmad-and-associates.github.io`
+   - Make it public
+   - Don't initialize with README
+
+2. **Push to GitHub**:
    ```bash
    git init
    git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/yourusername/ahmad-and-associates.git
+   git commit -m "Initial Ahmad and Associates website"
+   git remote add origin https://github.com/ahmad-and-associates/ahmad-and-associates.github.io.git
    git branch -M main
    git push -u origin main
    ```
 
-2. **Repository Settings**:
-   - Go to your GitHub repository
-   - Navigate to Settings → Pages
+3. **Enable GitHub Pages**:
+   - Go to Settings → Pages
    - Under "Source", select "GitHub Actions"
    - The deployment will run automatically
 
-3. **Configure Repository Name** (if not using a personal domain):
-   - If your repo is not named `{username}.github.io`, update `NEXT_PUBLIC_BASE_PATH` environment variable
-   - Go to Settings → Secrets and variables → Actions
-   - Add `NEXT_PUBLIC_BASE_PATH` with value `/repository-name`
+### Your Site URL
+```
+https://ahmad-and-associates.github.io
+```
 
 ### Automatic Deployment
 
-The GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically:
+The GitHub Actions workflow automatically:
 - Builds the Next.js app when you push to `main`
+- Uses `--legacy-peer-deps` to handle React 19 compatibility
 - Exports static files to `/out`
 - Deploys to GitHub Pages
-
-Your site will be live at: `https://yourusername.github.io/repository-name`
 
 ## 🎨 Customization
 
