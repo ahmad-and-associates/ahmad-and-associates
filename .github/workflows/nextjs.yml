@@ -37,8 +37,6 @@ jobs:
 
       - name: Build with Next.js
         run: npx next build
-        env:
-          NEXT_PUBLIC_BASE_PATH: ${{ contains(github.repository, '.github.io') ? '' : format('/{0}', github.event.repository.name) }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
